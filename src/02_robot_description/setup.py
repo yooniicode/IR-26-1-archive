@@ -17,6 +17,8 @@ setup(
     ],
     install_requires=['setuptools'],
     entry_points={
-        'console_scripts': [],
+        'console_scripts': [
+            'fk_checker = robot_description.fk_checker:main',
+        ],
     },
 )
