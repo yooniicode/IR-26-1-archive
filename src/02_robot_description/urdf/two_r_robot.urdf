@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot name="2R_robot">
+
+  <!-- Links -->
+  <link name="base_link"/>
+
+  <link name="link_1">
+    <visual>
+      <geometry>
+        <cylinder length="1.0" radius="0.05"/>
+      </geometry>
+      <!-- center the cylinder along z-axis -->
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <material name="green">
+        <color rgba="0 0.8 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="link_2">
+    <visual>
+      <geometry>
+        <cylinder length="1.0" radius="0.05"/>
+      </geometry>
+      <!-- center the cylinder along z-axis -->
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Joints -->
+  <!-- joint_1: base_link -> link_1 — this is ⁰₁T -->
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child  link="link_1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>  <!-- no offset from base -->
+    <axis   xyz="0 1 0"/>              <!-- rotate around y-axis (vertical plane) -->
+    <limit  lower="-3.14159" upper="3.14159" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- joint_2: link_1 -> link_2 — this is ¹₂T -->
+  <joint name="joint_2" type="revolute">
+    <parent link="link_1"/>
+    <child  link="link_2"/>
+    <origin xyz="0 0 1.0" rpy="0 0 0"/>  <!-- offset by a1=1.0 along z -->
+    <axis   xyz="0 1 0"/>                <!-- rotate around y-axis (vertical plane) -->
+    <limit  lower="-3.14159" upper="3.14159" effort="10" velocity="1"/>
+  </joint>
+
+</robot>

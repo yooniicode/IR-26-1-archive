@@ -48,7 +48,13 @@ git clone <repo-url> ~/ros2_ws
 cd ~/ros2_ws
 ```
 
-### 3. Build the workspace
+### 3. Install dependencies
+```bash
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+
+### 4. Build the workspace
 
 ```bash
 cd ~/ros2_ws

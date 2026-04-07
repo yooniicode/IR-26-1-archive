@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<robot name="mobile_robot">
+
+  <!-- ───── Links ───── -->
+
+  <link name="base_link">
+    <visual>
+      <geometry><box size="0.3 0.2 0.1"/></geometry>
+      <material name="gray"><color rgba="0.5 0.5 0.5 1"/></material>
+    </visual>
+  </link>
+
+  <link name="left_wheel">
+    <visual>
+      <geometry><cylinder length="0.05" radius="0.06"/></geometry>
+      <origin rpy="1.5708 0 0" xyz="0 0 0"/>   <!-- rotate cylinder to face sideways -->
+      <material name="black"><color rgba="0 0 0 1"/></material>
+    </visual>
+  </link>
+
+  <link name="right_wheel">
+    <visual>
+      <geometry><cylinder length="0.05" radius="0.06"/></geometry>
+      <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+      <material name="black"><color rgba="0 0 0 1"/></material>
+    </visual>
+  </link>
+
+  <link name="caster_wheel">
+    <visual>
+      <geometry><sphere radius="0.03"/></geometry>
+      <material name="gray"><color rgba="0.5 0.5 0.5 1"/></material>
+    </visual>
+  </link>
+
+  <!-- LiDAR sensor -->
+  <link name="laser_frame">
+    <visual>
+      <geometry><cylinder length="0.04" radius="0.05"/></geometry>
+      <material name="red"><color rgba="0.8 0 0 1"/></material>
+    </visual>
+  </link>
+
+  <!-- ───── Joints ───── -->
+
+  <!-- continuous: no angle limit — wheels spin freely -->
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child  link="left_wheel"/>
+    <origin xyz="0 0.125 -0.05" rpy="0 0 0"/>  <!-- left side, slightly below base -->
+    <axis   xyz="0 1 0"/>                        <!-- rotate around y-axis -->
+  </joint>
+
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child  link="right_wheel"/>
+    <origin xyz="0 -0.125 -0.05" rpy="0 0 0"/> <!-- right side, slightly below base -->
+    <axis   xyz="0 1 0"/>
+  </joint>
+
+  <!-- fixed: passive support wheel, no movement -->
+  <joint name="caster_wheel_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="caster_wheel"/>
+    <origin xyz="-0.1 0 -0.08" rpy="0 0 0"/>   <!-- rear, below base -->
+  </joint>
+
+  <!-- fixed: LiDAR mounted on top-front of base -->
+  <joint name="laser_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="laser_frame"/>
+    <origin xyz="0.1 0 0.075" rpy="0 0 0"/>    <!-- 10cm front, 7.5cm above base -->
+  </joint>
+
+</robot>
