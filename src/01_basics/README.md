@@ -18,6 +18,12 @@ colcon build --packages-select basics
 source install/setup.bash
 ```
 
+Or build with symlink-install
+```bash
+colcon build --symlink-install
+source install/setup.bash
+```
+
 ## Run
 
 **Terminal 1 — talker:**
@@ -40,8 +46,8 @@ ros2 launch basics talker_listener.launch.py
 ```bash
 ros2 node list
 ros2 topic list
-ros2 topic echo /chatter
-ros2 topic hz /chatter
-ros2 topic info /chatter
+ros2 topic echo /topic
+ros2 topic hz /topic
+ros2 topic info /topic
 rqt_graph
 ```
