@@ -70,7 +70,7 @@ root@DESKTOP-CLSFCGH:~/ir#
 ### 환경변수
 gedit ~/.bashrc
 source ~/bashrc
-- 학번 뒷 세자리로 .. Bashrc에 설정하였음
+- 학번 뒷 세G자리로 .. Bashrc에 설정하였음
 - RQT 그래프로 구성확인할 수 있음
 
 ### 빌드 ~!! 
