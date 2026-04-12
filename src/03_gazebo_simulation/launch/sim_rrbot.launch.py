@@ -10,9 +10,11 @@ def generate_launch_description():
     pkg_share = get_package_share_directory('gazebo_simulation')
     ros_gz_sim_share = get_package_share_directory('ros_gz_sim')
 
-    urdf_path = os.path.join(pkg_share, 'urdf', 'two_r_robot.urdf')
+    urdf_path = os.path.join(pkg_share, 'urdf', 'rrbot.urdf')
     with open(urdf_path, 'r') as f:
         robot_description = f.read().replace('$(find gazebo_simulation)', pkg_share)
+
+    rviz_config = os.path.join(pkg_share, 'config', 'display_robot.rviz')
 
     return LaunchDescription([
         # Gazebo Fortress
@@ -23,7 +25,7 @@ def generate_launch_description():
             launch_arguments=[('gz_args', '-r empty.sdf --physics-engine ignition-physics5-bullet-plugin')],
         ),
 
-        # Bridge /clock so ROS 2 nodes get sim time
+        # Bridge /clock
         Node(
             package='ros_gz_bridge',
             executable='parameter_bridge',
@@ -35,7 +37,7 @@ def generate_launch_description():
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
-            parameters=[{'robot_description': robot_description}],
+            parameters=[{'robot_description': robot_description, 'use_sim_time': True}],
             output='screen',
         ),
 
@@ -44,6 +46,37 @@ def generate_launch_description():
             package='ros_gz_sim',
             executable='create',
             arguments=['-topic', 'robot_description', '-name', '2r_robot'],
+            output='screen',
+        ),
+
+        # Controllers
+        Node(
+            package='controller_manager',
+            executable='spawner',
+            arguments=['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
+            output='screen',
+        ),
+        Node(
+            package='controller_manager',
+            executable='spawner',
+            arguments=['joint_trajectory_controller', '--controller-manager', '/controller_manager'],
+            output='screen',
+        ),
+
+        # RViz
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            arguments=['-d', rviz_config],
+            parameters=[{'use_sim_time': True}],
+            output='screen',
+        ),
+
+        # rqt joint trajectory controller GUI
+        Node(
+            package='rqt_joint_trajectory_controller',
+            executable='rqt_joint_trajectory_controller',
+            arguments=['--force-discover'],
             output='screen',
         ),
     ])

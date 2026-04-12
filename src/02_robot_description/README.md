@@ -6,11 +6,11 @@ URDF models and launch files for Intelligent Robotics.
 
 | File | Description |
 |---|---|
-| `urdf/two_r_robot.urdf` | 2R planar robot arm (upright, 2 revolute joints) |
+| `urdf/rrbot.urdf` | 2R planar robot arm (upright, 2 revolute joints) |
 | `urdf/mobile_robot.urdf` | Differential drive mobile robot with LiDAR |
-| `launch/display_two_r_robot.launch.py` | Launch 2R robot in RViz |
+| `launch/display_rrbot.launch.py` | Launch 2R robot in RViz |
 | `launch/display_mobile_robot.launch.py` | Launch mobile robot in RViz |
-| `rviz/two_r_robot.rviz` | RViz config for 2R robot |
+| `rviz/rrbot.rviz` | RViz config for 2R robot |
 | `rviz/mobile_robot.rviz` | RViz config for mobile robot |
 
 ## Dependencies
@@ -32,7 +32,7 @@ source install/setup.bash
 
 ### 2R Robot
 ```bash
-ros2 launch robot_description display_two_r_robot.launch.py
+ros2 launch robot_description display_rrbot.launch.py
 ```
 
 ### Mobile Robot

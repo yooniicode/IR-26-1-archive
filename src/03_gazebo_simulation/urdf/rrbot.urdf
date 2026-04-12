@@ -108,7 +108,7 @@
   <gazebo>
     <plugin filename="gz_ros2_control-system"
             name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>$(find gazebo_simulation)/config/two_r_robot_controllers.yaml</parameters>
+      <parameters>$(find gazebo_simulation)/config/rrbot_controllers.yaml</parameters>
       <hold_joints>false</hold_joints>
     </plugin>
   </gazebo>

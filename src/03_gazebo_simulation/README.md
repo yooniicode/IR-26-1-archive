@@ -9,27 +9,27 @@ Gazebo simulation for 2R robot and mobile robot — supports both Gazebo Classic
 | File | Description |
 |---|---|
 | `urdf/mobile_robot.urdf` | Mobile robot for Gazebo Fortress (default) |
-| `urdf/two_r_robot.urdf` | 2R robot for Gazebo Fortress (default) |
+| `urdf/rrbot.urdf` | 2R robot for Gazebo Fortress (default) |
 | `urdf/mobile_robot_classic.urdf` | Mobile robot for Gazebo Classic |
-| `urdf/two_r_robot_classic.urdf` | 2R robot for Gazebo Classic |
+| `urdf/rrbot_classic.urdf` | 2R robot for Gazebo Classic |
 
 ### Launch files
 
 | File | Description |
 |---|---|
 | `launch/bringup_mobile_robot.launch.py` | Spawn mobile robot in Gazebo Fortress |
-| `launch/bringup_two_r_robot.launch.py` | Spawn 2R robot in Gazebo Fortress |
+| `launch/bringup_rrbot.launch.py` | Spawn 2R robot in Gazebo Fortress |
 | `launch/bringup_classic_mobile_robot.launch.py` | Spawn mobile robot in Gazebo Classic |
-| `launch/bringup_classic_two_r_robot.launch.py` | Spawn 2R robot in Gazebo Classic |
+| `launch/bringup_classic_rrbot.launch.py` | Spawn 2R robot in Gazebo Classic |
 | `launch/control_mobile_robot.launch.py` | Load controllers for mobile robot (Gazebo-agnostic) |
-| `launch/control_two_r_robot.launch.py` | Load controllers for 2R robot (Gazebo-agnostic) |
+| `launch/control_rrbot.launch.py` | Load controllers for 2R robot (Gazebo-agnostic) |
 
 ### Config
 
 | File | Description |
 |---|---|
 | `config/mobile_robot_controllers.yaml` | `joint_state_broadcaster` + `diff_drive_controller` |
-| `config/two_r_robot_controllers.yaml` | `joint_state_broadcaster` + `joint_trajectory_controller` |
+| `config/rrbot_controllers.yaml` | `joint_state_broadcaster` + `joint_trajectory_controller` |
 
 ### Scripts
 
@@ -80,10 +80,10 @@ source install/setup.bash
 
 ```bash
 # Terminal 1 — Gazebo + robot
-ros2 launch gazebo_simulation bringup_two_r_robot.launch.py
+ros2 launch gazebo_simulation bringup_rrbot.launch.py
 
 # Terminal 2 — load controllers
-ros2 launch gazebo_simulation control_two_r_robot.launch.py
+ros2 launch gazebo_simulation control_rrbot.launch.py
 ```
 
 ## (Gazebo Fortress) Interact with 2R robot 
@@ -113,7 +113,7 @@ View joint states:
 ros2 topic echo /joint_states
 ```
 
----
+<!-- ---
 
 ## Run — Mobile robot (Gazebo Fortress)
 
@@ -130,7 +130,7 @@ ros2 launch gazebo_simulation control_mobile_robot.launch.py
 Drive via `diff_drive_controller`:
 
 ```bash
-ros2 topic pub /diff_drive_controller/cmd_vel geometry_msgs/msg/Twist \
+ros2 topic pub -r 10 /diff_drive_controller/cmd_vel geometry_msgs/msg/Twist \
   "{linear: {x: 0.5}, angular: {z: 0.3}}"
 ```
 
@@ -144,4 +144,4 @@ View odometry:
 
 ```bash
 ros2 topic echo /diff_drive_controller/odom
-```
+``` -->
