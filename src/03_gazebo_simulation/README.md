@@ -18,10 +18,11 @@ Gazebo simulation for 2R robot and mobile robot — supports both Gazebo Classic
 | File | Description |
 |---|---|
 | `launch/bringup_mobile_robot.launch.py` | Spawn mobile robot in Gazebo Fortress |
+| `launch/sim_mobile_robot.launch.py` | Spawn mobile robot in Gazebo Fortress + RViz |
 | `launch/bringup_rrbot.launch.py` | Spawn 2R robot in Gazebo Fortress |
 | `launch/bringup_classic_mobile_robot.launch.py` | Spawn mobile robot in Gazebo Classic |
 | `launch/bringup_classic_rrbot.launch.py` | Spawn 2R robot in Gazebo Classic |
-| `launch/control_mobile_robot.launch.py` | Load controllers for mobile robot (Gazebo-agnostic) |
+| `launch/control_mobile_robot.launch.py` | (No-op — mobile robot uses native Gazebo diff drive plugin, no controller_manager) |
 | `launch/control_rrbot.launch.py` | Load controllers for 2R robot (Gazebo-agnostic) |
 
 ### Config
@@ -113,35 +114,35 @@ View joint states:
 ros2 topic echo /joint_states
 ```
 
-<!-- ---
+---
 
 ## Run — Mobile robot (Gazebo Fortress)
 
 ```bash
-# Terminal 1 — Gazebo + robot
+# Gazebo only
 ros2 launch gazebo_simulation bringup_mobile_robot.launch.py
 
-# Terminal 2 — load controllers
-ros2 launch gazebo_simulation control_mobile_robot.launch.py
+# Gazebo + RViz
+ros2 launch gazebo_simulation sim_mobile_robot.launch.py
 ```
 
-## Interact with mobile robot
+The mobile robot uses the **native Gazebo diff drive plugin** (`gz-sim-diff-drive-system`) — no `ros2_control` or `controller_manager` needed. The plugin integrates directly with the physics engine's contact/friction model so the wheels actually push the robot.
 
-Drive via `diff_drive_controller`:
+### Drive the robot
 
 ```bash
-ros2 topic pub -r 10 /diff_drive_controller/cmd_vel geometry_msgs/msg/Twist \
+ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
   "{linear: {x: 0.5}, angular: {z: 0.3}}"
 ```
 
-View LiDAR:
+### View LiDAR
 
 ```bash
 ros2 topic echo /scan
 ```
 
-View odometry:
+### View odometry
 
 ```bash
-ros2 topic echo /diff_drive_controller/odom
-``` -->
+ros2 topic echo /odom
+```
