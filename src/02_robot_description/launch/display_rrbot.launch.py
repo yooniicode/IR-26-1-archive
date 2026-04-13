@@ -7,7 +7,7 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     pkg_share = get_package_share_directory('robot_description')
 
-    urdf_path = os.path.join(pkg_share, 'urdf', 'two_r_robot.urdf')
+    urdf_path = os.path.join(pkg_share, 'urdf', 'rrbot.urdf')
     rviz_config_path = os.path.join(pkg_share, 'rviz', 'display_robot.rviz')
 
     with open(urdf_path, 'r') as f:
