@@ -53,15 +53,6 @@ def generate_launch_description():
             output='screen',
         ),
 
-        # If Gazebo emits scan with frame_id "mobile_robot/laser_frame" instead of "laser_frame"
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            arguments=['0', '0', '0', '0', '0', '0', 'laser_frame', 'mobile_robot/laser_frame'],
-            parameters=[{'use_sim_time': True}],
-            output='screen',
-        ),
-
         # Publish robot description
         Node(
             package='robot_state_publisher',
@@ -87,7 +78,7 @@ def generate_launch_description():
             output='screen',
         ),
 
-        # Drive robot and publish trajectory
+        # cmd_vel publisher
         Node(
             package='gazebo_simulation',
             executable='cmd_vel_publisher',

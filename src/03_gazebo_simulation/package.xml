@@ -9,7 +9,13 @@
 
   <!-- Python node -->
   <exec_depend>rclpy</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>trajectory_msgs</exec_depend>
+  <exec_depend>builtin_interfaces</exec_depend>
+  <exec_depend>rosgraph_msgs</exec_depend>
+  <exec_depend>tf2_msgs</exec_depend>
 
   <!-- Robot description -->
   <exec_depend>robot_state_publisher</exec_depend>
@@ -30,7 +36,12 @@
   <exec_depend>joint_trajectory_controller</exec_depend>
   <exec_depend>diff_drive_controller</exec_depend>
 
+  <!-- Visualization -->
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>rqt_joint_trajectory_controller</exec_depend>
+
   <!-- Teleoperation -->
+  <exec_depend>teleop_twist_keyboard</exec_depend>
   <exec_depend>rqt_robot_steering</exec_depend>
 
   <export>

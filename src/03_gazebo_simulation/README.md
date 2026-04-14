@@ -152,6 +152,12 @@ Or publish through rqt robot steering:
 ros2 run rqt_robot_steering rqt_robot_steering
 ```
 
+Or teleop with keyboard:
+
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
 ### View LiDAR
 
 ```bash
