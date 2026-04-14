@@ -86,4 +86,11 @@ def generate_launch_description():
             parameters=[{'use_sim_time': True}],
             output='screen',
         ),
+
+        # Drive robot and publish trajectory
+        Node(
+            package='gazebo_simulation',
+            executable='cmd_vel_publisher',
+            output='screen',
+        ),
     ])
