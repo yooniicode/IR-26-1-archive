@@ -26,7 +26,7 @@ setup(
     entry_points={
         'console_scripts': [
             'trajectory_publisher = gazebo_simulation.trajectory_publisher:main',
-            'trajectory_publisher_classic = gazebo_simulation.trajectory_publisher_classic:main',
+            'cmd_vel_publisher = gazebo_simulation.cmd_vel_publisher:main',
         ],
     },
 )

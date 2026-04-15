@@ -18,18 +18,15 @@ Gazebo simulation for 2R robot and mobile robot — supports both Gazebo Classic
 | File | Description |
 |---|---|
 | `launch/bringup_mobile_robot.launch.py` | Spawn mobile robot in Gazebo Fortress |
-| `launch/sim_mobile_robot.launch.py` | Spawn mobile robot in Gazebo Fortress + RViz |
+| `launch/sim_mobile_robot.launch.py` | Spawn mobile robot in Gazebo Fortress + RViz + cmd_vel_publisher |
 | `launch/bringup_rrbot.launch.py` | Spawn 2R robot in Gazebo Fortress |
-| `launch/bringup_classic_mobile_robot.launch.py` | Spawn mobile robot in Gazebo Classic |
-| `launch/bringup_classic_rrbot.launch.py` | Spawn 2R robot in Gazebo Classic |
-| `launch/control_mobile_robot.launch.py` | (No-op — mobile robot uses native Gazebo diff drive plugin, no controller_manager) |
+| `launch/sim_rrbot.launch.py` | Spawn 2R robot in Gazebo Fortress + RViz + controllers |
 | `launch/control_rrbot.launch.py` | Load controllers for 2R robot (Gazebo-agnostic) |
 
 ### Config
 
 | File | Description |
 |---|---|
-| `config/mobile_robot_controllers.yaml` | `joint_state_broadcaster` + `diff_drive_controller` |
 | `config/rrbot_controllers.yaml` | `joint_state_broadcaster` + `joint_trajectory_controller` |
 
 ### Scripts
@@ -37,6 +34,7 @@ Gazebo simulation for 2R robot and mobile robot — supports both Gazebo Classic
 | File | Description |
 |---|---|
 | `gazebo_simulation/trajectory_publisher.py` | Send a 3-waypoint trajectory to the 2R robot |
+| `gazebo_simulation/cmd_vel_publisher.py` | Drive mobile robot at 0.5 m/s and publish `/trajectory` path for RViz |
 
 ## Differences from `02_robot_description`
 
@@ -75,9 +73,9 @@ colcon build --packages-select gazebo_simulation --symlink-install
 source install/setup.bash
 ```
 
-## Run
+## Run 2R robot
 
-### (Gazebo Fortress) 2R robot
+### Bring up the robot
 
 ```bash
 # Terminal 1 — Gazebo + robot
@@ -87,7 +85,7 @@ ros2 launch gazebo_simulation bringup_rrbot.launch.py
 ros2 launch gazebo_simulation control_rrbot.launch.py
 ```
 
-## (Gazebo Fortress) Interact with 2R robot 
+### Interact with 2R robot 
 
 Send a trajectory via the script:
 
@@ -114,25 +112,50 @@ View joint states:
 ros2 topic echo /joint_states
 ```
 
+
+### Run everything at once
+
+```bash
+# Gazebo + RViz
+ros2 launch gazebo_simulation sim_rrobot.launch.py
+```
+
+
 ---
 
-## Run — Mobile robot (Gazebo Fortress)
+## Run Mobile robot 
+### Bring up the robot
 
 ```bash
 # Gazebo only
 ros2 launch gazebo_simulation bringup_mobile_robot.launch.py
-
-# Gazebo + RViz
-ros2 launch gazebo_simulation sim_mobile_robot.launch.py
 ```
 
-The mobile robot uses the **native Gazebo diff drive plugin** (`gz-sim-diff-drive-system`) — no `ros2_control` or `controller_manager` needed. The plugin integrates directly with the physics engine's contact/friction model so the wheels actually push the robot.
-
 ### Drive the robot
+
+Send a command via the script:
+
+```bash
+ros2 run gazebo_simulation cmd_vel_publisher
+```
+
+Or publish manually:
 
 ```bash
 ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist \
   "{linear: {x: 0.5}, angular: {z: 0.3}}"
+```
+
+Or publish through rqt robot steering:
+
+```bash
+ros2 run rqt_robot_steering rqt_robot_steering
+```
+
+Or teleop with keyboard:
+
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 
 ### View LiDAR
@@ -145,4 +168,11 @@ ros2 topic echo /scan
 
 ```bash
 ros2 topic echo /odom
+```
+
+### Run everything at once
+
+```bash
+# Gazebo + RViz
+ros2 launch gazebo_simulation sim_mobile_robot.launch.py
 ```
